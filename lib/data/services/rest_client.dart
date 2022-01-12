@@ -15,6 +15,8 @@ abstract class RestClient{
 
   @GET("character/?page={number}")
   Future<CharactersResponse> getAllCharacters(@Path("number") int number);
+  @GET("character/{number}")
+  Future<Results> getCharacterById(@Path("number") int number);
 
   // @GET("posts")
   // Future<List<PostResponse>> getAllPosts();

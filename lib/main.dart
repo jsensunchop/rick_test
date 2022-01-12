@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:rick_test/domain/bloc/characters_bloc/characters_bloc.dart';
+import 'package:rick_test/domain/bloc/individual_character_bloc/individual_character_bloc.dart';
+import 'package:rick_test/ui/screens/details/details_page.dart';
 import 'package:rick_test/ui/screens/home/home_page.dart';
 import 'package:rick_test/ui/screens/home/home_screen.dart';
 
@@ -13,6 +15,9 @@ void main() {
       MultiBlocProvider(providers: [
         BlocProvider<CharacterBloc>(create: (context){
           return CharacterBloc(userRepo)..add(FetchCharacter());
+        }),
+        BlocProvider<IndividualCharacterBloc>(create: (context){
+          return IndividualCharacterBloc(userRepo)..add(FetchCharacterEvent());
         }),
       ],
           child: const MyApp())
@@ -41,6 +46,14 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: const HomePage(),
+      routes: {
+        HomePage.routeName: (context) => HomePage(),
+        DetailsPage.routeName: (context) => DetailsPage()
+        //
+        // 'splash': ( _ ) => SplashPage(),
+        // 'register': ( _ ) => RegisterPage(),
+        // 'home' : ( _ ) => HomePage(),
+      },
     );
   }
 }

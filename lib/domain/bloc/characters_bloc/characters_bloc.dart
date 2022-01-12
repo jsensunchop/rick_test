@@ -23,7 +23,7 @@ class CharacterBloc extends Bloc<CharacterEvent, CharacterState> {
       yield FetchingCharacters();
       try {
         //consuming api
-        final data = await userRepo.fetchCharacters(3);
+        final data = await userRepo.fetchCharacters(1);
         yield CharactersFetched(data);
       } catch (error) {
         ///EVENTO DE ERROR

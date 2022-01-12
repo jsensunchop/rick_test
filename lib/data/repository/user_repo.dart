@@ -23,6 +23,10 @@ class UserRepo {
   Future<CharactersResponse> fetchCharacters(int number) async{
     return await _client.getAllCharacters(number);
   }
+  //Get all users from API
+  Future<Results> fetchCharacterById(int number) async{
+    return await _client.getCharacterById(number);
+  }
   // //Get all posts from API
   // Future<List<PostResponse>> fetchPosts() async{
   //   return await _client.getAllPosts();
