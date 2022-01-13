@@ -67,30 +67,28 @@ class _HomePageState extends State<HomePage> {
                     elevation: 1,
                     color: Colors.grey.shade200,
                     child: ListTile(
-                      subtitle: Expanded(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            const Text(
-                              "La serie en numeros",
-                              style: TextStyle(
-                                  fontSize: 14.0,
-                                  color: Style.Colors.darkBlue,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            const SizedBox(
-                              height: 12,
-                            ),
-                            Text(
-                              "${state.episodeInfo.info.count.toString()} Numero de episodios",
-                              style: const TextStyle(
-                                  fontSize: 14.0,
-                                  color: Style.Colors.darkBlue,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ],
-                        ),
+                      subtitle: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          const Text(
+                            "La serie en numeros",
+                            style: TextStyle(
+                                fontSize: 14.0,
+                                color: Style.Colors.darkBlue,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          const SizedBox(
+                            height: 12,
+                          ),
+                          Text(
+                            "${state.episodeInfo.info.count.toString()} Numero de episodios",
+                            style: const TextStyle(
+                                fontSize: 14.0,
+                                color: Style.Colors.darkBlue,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
                       ),
                     ),
                   ),
@@ -101,7 +99,7 @@ class _HomePageState extends State<HomePage> {
               return const Center(child: CircularProgressIndicator());
             }
           }),
-          Expanded(child: _postList()),
+          _postList(),
         ],
       ),
     );
@@ -123,26 +121,28 @@ class _HomePageState extends State<HomePage> {
         characters = state.characters;
       }
 
-      return ListView.separated(
-        controller: scrollController,
-        separatorBuilder: (BuildContext context, int index) {
-          return const SizedBox(
-            height: 20,
-          );
-        },
-        itemCount: characters.length + (isLoading ? 1 : 0),
-        itemBuilder: (context, index) {
-          if (index < characters.length) {
-            return _charactersList(characters[index], context);
-          } else {
-            Timer(Duration(milliseconds: 30), () {
-              scrollController
-                  .jumpTo(scrollController.position.maxScrollExtent);
-            });
+      return Expanded(
+        child: ListView.separated(
+          controller: scrollController,
+          separatorBuilder: (BuildContext context, int index) {
+            return const SizedBox(
+              height: 20,
+            );
+          },
+          itemCount: characters.length + (isLoading ? 1 : 0),
+          itemBuilder: (context, index) {
+            if (index < characters.length) {
+              return _charactersList(characters[index], context);
+            } else {
+              Timer(Duration(milliseconds: 30), () {
+                scrollController
+                    .jumpTo(scrollController.position.maxScrollExtent);
+              });
 
-            return _loadingIndicator();
-          }
-        },
+              return _loadingIndicator();
+            }
+          },
+        ),
       );
     });
   }
