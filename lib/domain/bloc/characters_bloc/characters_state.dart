@@ -1,28 +1,19 @@
 part of 'characters_bloc.dart';
 
 
-abstract class CharacterState extends Equatable {}
+@immutable
+abstract class PostsState {}
 
-class InitialCharacterState extends CharacterState{
-  @override
-  List<Object> get props => [];
+class PostsInitial extends PostsState {}
+class PostsLoaded extends PostsState {
+  final List<Results> posts;
+
+  PostsLoaded(this.posts);
 }
-// success state
-class CharactersFetched extends CharacterState {
-  final CharactersResponse charactersResponse;
 
-  CharactersFetched(this.charactersResponse);
+class PostsLoading extends PostsState {
+  final List<Results> oldPosts;
+  final bool isFirstFetch;
 
-  @override
-  List<Object> get props => [charactersResponse];
-}
-//loading state
-class FetchingCharacters extends CharacterState{
-  @override
-  List<Object> get props => [];
-
-//error state
-}class ErrorFetching extends CharacterState{
-  @override
-  List<Object> get props => [];
+  PostsLoading(this.oldPosts, {this.isFirstFetch=false});
 }

@@ -11,22 +11,21 @@ import 'data/repository/user_repo.dart';
 
 void main() {
   final userRepo = UserRepo();
-  runApp(
-      MultiBlocProvider(providers: [
-        BlocProvider<CharacterBloc>(create: (context){
-          return CharacterBloc(userRepo)..add(FetchCharacter());
-        }),
-        BlocProvider<IndividualCharacterBloc>(create: (context){
+  runApp(MultiBlocProvider(
+      providers: [
+        BlocProvider<IndividualCharacterBloc>(create: (context) {
           return IndividualCharacterBloc(userRepo)..add(FetchCharacterEvent());
         }),
       ],
-          child: const MyApp())
-
-  );
+      child: MyApp(
+        repository:userRepo,
+      )));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  final UserRepo repository;
+
+  const MyApp({Key? key, required this.repository}) : super(key: key);
 
   // This widget is the root of your application.
   @override
@@ -45,9 +44,12 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: const HomePage(),
+      home: BlocProvider(
+        create: (context) => PostsCubit(repository),
+        child: HomePage(),
+      ),
       routes: {
-        HomePage.routeName: (context) => HomePage(),
+        // HomePage.routeName: (context) => HomePage(),
         DetailsPage.routeName: (context) => DetailsPage()
         //
         // 'splash': ( _ ) => SplashPage(),

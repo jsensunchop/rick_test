@@ -1,39 +1,38 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:rick_test/data/repository/user_repo.dart';
 import 'package:rick_test/domain/entities/characters_response.dart';
 
 part 'characters_event.dart';
 part 'characters_state.dart';
 
-class CharacterBloc extends Bloc<CharacterEvent, CharacterState> {
-  CharacterBloc(this.userRepo) : super(InitialCharacterState());
+class PostsCubit extends Cubit<PostsState> {
+  PostsCubit(this.repository) : super(PostsInitial());
 
-  final UserRepo userRepo ;
+  int page = 1;
+  final UserRepo repository;
 
+  void loadPosts() {
+    if (state is PostsLoading) return;
 
-  @override
-  void onTransition(Transition<CharacterEvent, CharacterState> transition) {
-    super.onTransition(transition);
-  }
+    final currentState = state;
 
-  @override
-  Stream<CharacterState> mapEventToState(CharacterEvent event) async* {
-    if (event is FetchNextCharacterPage) {
-      yield FetchingCharacters();
-      try {
-        //consuming api
-        final _characterPage = event.characterPage;
-        final data = await userRepo.fetchCharacters(_characterPage);
-        yield CharactersFetched(data);
-      } catch (error) {
-        ///EVENTO DE ERROR
-        yield ErrorFetching();
-        print(error);
-        print("hello");
-      }
+    var oldPosts = <Results>[];
+    if (currentState is PostsLoaded) {
+      oldPosts = currentState.posts;
     }
+
+    emit(PostsLoading(oldPosts, isFirstFetch: page == 1));
+
+    repository.fetchCharacters(page).then((newPosts) {
+      page++;
+
+      final posts = (state as PostsLoading).oldPosts;
+      posts.addAll(newPosts.results);
+
+      emit(PostsLoaded(posts));
+    });
   }
 
-  CharacterState get initialState => InitialCharacterState();
 }
