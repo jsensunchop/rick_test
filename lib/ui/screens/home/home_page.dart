@@ -21,11 +21,35 @@ class _HomePageState extends State<HomePage> {
   ///INICIALIZAR LA BASE DE DATOS
   String keyword = '';
   int characterId = 0;
-  late String userName;
-  late String userEmail;
-  late String userPhone;
+  int characterPage = 1;
 
-  void fetchBusinessList(int id) {
+  ScrollController _scrollController = ScrollController();
+
+  @override
+  void initState(){
+    super.initState();
+    BlocProvider.of<CharacterBloc>(context)
+        .add(FetchNextCharacterPage(characterPage: characterPage)
+      // FetchBusinessEvent()
+    );
+
+    _scrollController.addListener(() {
+      if(_scrollController.position.pixels == _scrollController.position.maxScrollExtent){
+        BlocProvider.of<CharacterBloc>(context)
+            .add(FetchNextCharacterPage(characterPage: characterPage++)
+          // FetchBusinessEvent()
+        );
+      }
+    });
+  }
+  
+  @override
+  void dispose(){
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void fetchIndividualCharacter(int id) {
     BlocProvider.of<IndividualCharacterBloc>(context)
         .add(FetchCharacterById(characterId: id)
             // FetchBusinessEvent()
@@ -75,13 +99,14 @@ class _HomePageState extends State<HomePage> {
                       scrollDirection: Axis.vertical,
                       shrinkWrap: true,
                       itemCount: state.charactersResponse.results.length,
+                      controller: _scrollController,
                       itemBuilder: (context, index) {
                         return SizedBox(
                           height: MediaQuery.of(context).size.height * 0.19,
 
                           ///WIDGET DE TARJETA
                           child: InkWell(
-                            onTap: () => fetchBusinessList(
+                            onTap: () => fetchIndividualCharacter(
                                 state.charactersResponse.results[index].id),
                             child: Card(
                               elevation: 1,

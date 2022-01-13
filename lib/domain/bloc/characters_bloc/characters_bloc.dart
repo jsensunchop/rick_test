@@ -19,11 +19,12 @@ class CharacterBloc extends Bloc<CharacterEvent, CharacterState> {
 
   @override
   Stream<CharacterState> mapEventToState(CharacterEvent event) async* {
-    if (event is FetchCharacter) {
+    if (event is FetchNextCharacterPage) {
       yield FetchingCharacters();
       try {
         //consuming api
-        final data = await userRepo.fetchCharacters(1);
+        final _characterPage = event.characterPage;
+        final data = await userRepo.fetchCharacters(_characterPage);
         yield CharactersFetched(data);
       } catch (error) {
         ///EVENTO DE ERROR
