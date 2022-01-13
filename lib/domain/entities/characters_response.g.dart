@@ -21,9 +21,9 @@ Map<String, dynamic> _$CharactersResponseToJson(CharactersResponse instance) =>
     };
 
 Info _$InfoFromJson(Map<String, dynamic> json) => Info(
-      json['count'] as int,
-      json['pages'] as int,
-      json['next'] as String,
+      json['count'] as int?,
+      json['pages'] as int?,
+      json['next'] as String?,
     );
 
 Map<String, dynamic> _$InfoToJson(Info instance) => <String, dynamic>{

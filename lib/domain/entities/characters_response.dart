@@ -23,9 +23,9 @@ class CharactersResponse {
 
 @JsonSerializable()
 class Info {
-  final int count;
-  final int pages;
-  final String next;
+  final int? count;
+  final int? pages;
+  final String? next;
   // final void prev;
 
 

@@ -7,13 +7,16 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:rick_test/data/repository/user_repo.dart';
 
 import 'package:rick_test/main.dart';
 
 void main() {
+
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
+    final userRepo = UserRepo();
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+    await tester.pumpWidget(MyApp(repository:userRepo));
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);

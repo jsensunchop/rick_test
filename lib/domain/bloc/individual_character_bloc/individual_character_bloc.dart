@@ -1,5 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart' as snack;
 import 'package:rick_test/data/repository/user_repo.dart';
 import 'package:rick_test/domain/entities/characters_response.dart';
 
@@ -31,6 +33,7 @@ class IndividualCharacterBloc extends Bloc<IndividualCharacterEvent, IndividualC
         yield ErrorFetching();
         print(error);
         print("hello");
+        snack.Get.snackbar("Error", "Hubo un error al obtener la data",backgroundColor: Colors.red);
       }
     }
   }

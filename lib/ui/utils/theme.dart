@@ -3,5 +3,6 @@ import 'package:flutter/material.dart';
 class Colors{
   const Colors();
 
-  static const Color mainColor = Color(0xFF1B5E20);
+  static const Color mainColor = Color.fromRGBO(0, 0, 128,1);
+  static const Color darkBlue = Color.fromRGBO(7, 42, 108, 1);
 }

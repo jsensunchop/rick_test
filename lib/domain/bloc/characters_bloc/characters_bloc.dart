@@ -7,31 +7,31 @@ import 'package:rick_test/domain/entities/characters_response.dart';
 part 'characters_event.dart';
 part 'characters_state.dart';
 
-class PostsCubit extends Cubit<PostsState> {
-  PostsCubit(this.repository) : super(PostsInitial());
+class PostsCubit extends Cubit<CharactersState> {
+  PostsCubit(this.repository) : super(CharactersInitial());
 
   int page = 1;
   final UserRepo repository;
 
   void loadPosts() {
-    if (state is PostsLoading) return;
+    if (state is CharactersLoading) return;
 
     final currentState = state;
 
     var oldPosts = <Results>[];
-    if (currentState is PostsLoaded) {
-      oldPosts = currentState.posts;
+    if (currentState is CharactersLoaded) {
+      oldPosts = currentState.characters;
     }
 
-    emit(PostsLoading(oldPosts, isFirstFetch: page == 1));
+    emit(CharactersLoading(oldPosts, isFirstFetch: page == 1));
 
     repository.fetchCharacters(page).then((newPosts) {
       page++;
 
-      final posts = (state as PostsLoading).oldPosts;
+      final posts = (state as CharactersLoading).oldCharactersList;
       posts.addAll(newPosts.results);
 
-      emit(PostsLoaded(posts));
+      emit(CharactersLoaded(posts));
     });
   }
 

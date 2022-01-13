@@ -2,6 +2,7 @@
 import 'package:retrofit/retrofit.dart';
 import 'package:dio/dio.dart' hide Headers;
 import 'package:rick_test/domain/entities/characters_response.dart';
+import 'package:rick_test/domain/entities/episode_response.dart';
 
 
 part 'rest_client.g.dart';
@@ -17,6 +18,9 @@ abstract class RestClient{
   Future<CharactersResponse> getAllCharacters(@Path("number") int number);
   @GET("character/{number}")
   Future<Results> getCharacterById(@Path("number") int number);
+
+  @GET("episode")
+  Future<EpisodeResponse> getEpisodes();
 
   // @GET("posts")
   // Future<List<PostResponse>> getAllPosts();

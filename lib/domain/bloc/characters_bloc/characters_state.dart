@@ -1,19 +1,18 @@
 part of 'characters_bloc.dart';
 
-
 @immutable
-abstract class PostsState {}
+abstract class CharactersState {}
 
-class PostsInitial extends PostsState {}
-class PostsLoaded extends PostsState {
-  final List<Results> posts;
+class CharactersInitial extends CharactersState {}
+class CharactersLoaded extends CharactersState {
+  final List<Results> characters;
 
-  PostsLoaded(this.posts);
+  CharactersLoaded(this.characters);
 }
 
-class PostsLoading extends PostsState {
-  final List<Results> oldPosts;
+class CharactersLoading extends CharactersState {
+  final List<Results> oldCharactersList;
   final bool isFirstFetch;
 
-  PostsLoading(this.oldPosts, {this.isFirstFetch=false});
+  CharactersLoading(this.oldCharactersList, {this.isFirstFetch=false});
 }

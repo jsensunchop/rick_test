@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:rick_test/domain/bloc/characters_bloc/characters_bloc.dart';
+import 'package:rick_test/domain/bloc/episodes_bloc/episodes_bloc.dart';
 import 'package:rick_test/domain/bloc/individual_character_bloc/individual_character_bloc.dart';
 import 'package:rick_test/ui/screens/details/details_page.dart';
 import 'package:rick_test/ui/screens/home/home_page.dart';
-import 'package:rick_test/ui/screens/home/home_screen.dart';
 
 import 'data/repository/user_repo.dart';
 
@@ -15,6 +15,9 @@ void main() {
       providers: [
         BlocProvider<IndividualCharacterBloc>(create: (context) {
           return IndividualCharacterBloc(userRepo)..add(FetchCharacterEvent());
+        }),
+        BlocProvider<EpisodesBloc>(create: (context) {
+          return EpisodesBloc(userRepo)..add(FetchEpisodesEvent());
         }),
       ],
       child: MyApp(

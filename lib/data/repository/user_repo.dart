@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:rick_test/data/services/rest_client.dart';
 import 'package:rick_test/domain/entities/characters_response.dart';
+import 'package:rick_test/domain/entities/episode_response.dart';
 
 class UserRepo {
 
@@ -27,14 +28,11 @@ class UserRepo {
   Future<Results> fetchCharacterById(int number) async{
     return await _client.getCharacterById(number);
   }
-  // //Get all posts from API
-  // Future<List<PostResponse>> fetchPosts() async{
-  //   return await _client.getAllPosts();
-  // }
-  // //Get all posts by userID
-  // Future<List<PostResponse>> fetchPostsById(int id) async{
-  //   return await _client.getPostsById(id);
-  // }
+
+  Future<EpisodeResponse> fetchEpisodes() async{
+    return await _client.getEpisodes();
+  }
+
 
 
 }
